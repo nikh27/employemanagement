@@ -1,0 +1,27 @@
+{% extends 'user_management.html' %}
+
+{% block content %}
+  <h1>Designation List</h1>
+  <table class="table" id='example'>
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Status</th>
+        <th scope="col">Date Added</th>
+        <th scope="col">Date Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for designation in designations %}
+        <tr>
+          <td>{{ designation.name }}</td>
+          <td>{{ designation.description }}</td>
+          <td>{{ designation.status }}</td>
+          <td>{{ designation.date_added }}</td>
+          <td>{{ designation.date_updated }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

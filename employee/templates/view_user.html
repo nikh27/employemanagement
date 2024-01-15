@@ -1,0 +1,42 @@
+{% extends 'user_master.html' %}
+
+{% block content %}
+  <h2>View User</h2>
+
+  <table class="table table-bordered">
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+    <tr>
+      <td>User</td>
+      <td>{{ user.full_name }}</td>
+    </tr>
+    <tr>
+      <td>Empcode</td>
+      <td>{{ user.empcode }}</td>
+    </tr>
+    <tr>
+      <td>Empdept</td>
+      <td>{{ user.empdept }}</td>
+    </tr>
+    <tr>
+      <td>Designation</td>
+      <td>{{ user.designation }}</td>
+    </tr>
+    <tr>
+      <td>Contact</td>
+      <td>{{ user.contact }}</td>
+    </tr>
+    <tr>
+      <td>Gender</td>
+      <td>{{ user.gender }}</td>
+    </tr>
+    <tr>
+      <td>Joining Date</td>
+      <td>{{ user.joiningdate }}</td>
+    </tr>
+  </table>
+
+  <a href="{% url 'user_master' %}" class="btn btn-secondary">Back to User Master</a>
+{% endblock %}

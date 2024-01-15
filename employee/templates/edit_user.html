@@ -1,0 +1,20 @@
+{% extends 'user_management.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1>Edit User</h1>
+    <form method="post" action="{% url 'edit_user' user.id %}">
+      {% csrf_token %}
+
+      <!-- User fields -->
+      {{ user_form.as_p }}
+      
+      <!-- EmployeeDetail fields -->
+      {{ form.as_p }}
+
+
+
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+  </div>
+{% endblock %}

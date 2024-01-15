@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyopJlFdL5giRS6OwUzo8zcXl3JGKS5J8" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .dashboard-header {
+      background-color: #343a40;
+      color: #ffffff;
+      padding: 15px;
+      text-align: right;
+      display: flex;
+      justify-content: space-between;
+      align-items: center; /* Vertical centering */
+    }
+
+    .dashboard-header h2 {
+      margin: 0; /* Remove default margin for h2 */
+    }
+
+    .dashboard-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .dashboard-btn {
+      flex: 1;
+      margin: 0 10px;
+      text-align: center;
+      padding: 20px;
+      background-color: #ffffff;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+    }
+
+    .dashboard-btn:hover {
+      background-color: #f8f9fa;
+    }
+
+    .dashboard-btn i {
+      font-size: 24px;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .dashboard-btn:hover {
+        background-color: grey;
+      }
+  </style>
+  <title>Dashboard</title>
+</head>
+<body>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="dashboard-header">
+        <h2>Dashboard</h2>
+        <span>Hello, {{ user.first_name }}</span>
+      </div>
+      <div class="dashboard-buttons">
+        <a href="{% url 'user_management' %}" class="btn btn-primary dashboard-btn"><i class="fas fa-users"></i> User Management</a>
+        <a href="{% url 'task_management' %}" class="btn btn-success dashboard-btn"><i class="fas fa-tasks"></i> Task Management</a>
+        <a href="{% url 'report' %}" class="btn btn-info dashboard-btn"><i class="fas fa-chart-bar"></i> Report</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Font Awesome Icons -->
+<script src="https://kit.fontawesome.com/your-font-awesome-key.js" crossorigin="anonymous"></script>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyopJlFdL5giRS6OwUzo8zcXl3JGKS5J8" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .dashboard-header {
+      background-color: #343a40;
+      color: #ffffff;
+      padding: 15px;
+      text-align: right;
+      display: flex;
+      justify-content: space-between;
+      align-items: center; /* Vertical centering */
+    }
+
+    .dashboard-header h2 {
+      margin: 0; /* Remove default margin for h2 */
+    }
+  </style>
+</head>
+<body>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="dashboard-header">
+        <h2>Task Management Dashboard</h2>
+        <span>Hello, {{ user.first_name }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+<h1>Task Management</h1>
+<ul>
+    <li>Define Milestone</li>
+    <li>Create Task</li>
+    <li>Assign Task</li>
+    <li>My Task</li>
+</ul>

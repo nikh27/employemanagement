@@ -1,0 +1,78 @@
+{% extends 'user_management.html' %}
+
+<!-- Add the required DataTables CSS and JS -->
+
+
+{% block content %}
+  <h1>User Master</h1>
+  <table class="table" id="example">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Empcode</th>
+        <th>Email</th>
+
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.full_name }}</td>
+          <td>{{ user.empcode }}</td>
+          <td>{{ user.user }}</td>
+          <td>
+            <a href="{% url 'edit_user' user.id %}" class="btn btn-primary btn-sm">Edit</a>
+            <a href="{% url 'view_user' user.id %}" class="btn btn-info btn-sm">View</a>
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteUser{{ user.id }}">
+              Delete
+            </button>
+          </td>
+        </tr>
+
+                <!-- Modal for Delete User -->
+        <div class="modal fade" id="deleteUser{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteUserLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteUserLabel">Delete User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you want to delete user '{{ user.full_name }}'?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a href="{% url 'delete_user' user.id %}" class="btn btn-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal for Delete User -->
+        <div class="modal fade" id="deleteUser{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteUserLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteUserLabel">Delete User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you want to delete user '{{ user.full_name }}'?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a href="{% url 'delete_user' user.id %}" class="btn btn-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+

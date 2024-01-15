@@ -1,0 +1,27 @@
+{% extends 'user_management.html' %}
+
+{% block content %}
+  <h1>Department List</h1>
+  <table class="table" id='example'>
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Status</th>
+        <th scope="col">Date Added</th>
+        <th scope="col">Date Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for department in departments %}
+        <tr>
+          <td>{{ department.name }}</td>
+          <td>{{ department.description }}</td>
+          <td>{{ department.status }}</td>
+          <td>{{ department.date_added }}</td>
+          <td>{{ department.date_updated }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
