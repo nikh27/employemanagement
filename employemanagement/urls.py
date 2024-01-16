@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from employee.views import *
+from task_mngt.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +27,7 @@ urlpatterns = [
     path('admin_log', admin_log, name='admin_log'),
     path('logout/', Logout, name='logout'),
     path('emp_home/',include('employee.urls')),
+    path('tak/',include('task_mngt.urls')),
 ]
 
 

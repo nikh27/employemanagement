@@ -1,12 +1,12 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from employee.views import *
 
 urlpatterns = [
-    path('emp_home/', emp_home, name='emp_home'),
-    path('emp_home/user_management/', user_management, name='user_management'),
-    path('emp_home/task_management/', task_management, name='task_management'),
-    path('emp_home/report/', report, name='report'),
+    path('', emp_home, name='emp_home'),
+    path('user_management/', user_management, name='user_management'),
+    path('task_management/', include('task_mngt.urls')),
+    path('report/', report, name='report'),
     path('user_master/', user_master, name='user_master'),
     # User Management URLs
     path('edit_user/<int:user_id>/', edit_user, name='edit_user'),

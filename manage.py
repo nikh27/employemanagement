@@ -7,12 +7,8 @@ from employemanagement.settings import base
 def main():
     """Run administrative tasks."""
     if base.DEBUG:
-        print(1)
-        print(base.DEBUG)
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'employemanagement.settings.local')
     else:
-        print(2)
-        print(base.DEBUG)
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'employemanagement.settings.prod')
 
     try:

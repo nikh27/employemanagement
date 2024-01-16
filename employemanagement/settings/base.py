@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'employee',
+    'task_mngt',
 ]
 
 MIDDLEWARE = [
@@ -131,13 +132,3 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# try:
-#     if os.environ.get("MODE") == "PROD":
-#         print("[*] Importing PROD settings")
-#         from .prod_settings import *
-#     else:
-#         print("[*] Importing LOCAL settings")
-#         from .local_settings import *
-# except Exception as e:
-#     raise Exception("[X] Error in importing settings : ", e)

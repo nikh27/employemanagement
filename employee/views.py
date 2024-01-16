@@ -141,8 +141,8 @@ def add_department(request):
 
     return render(request, 'add_department.html', {'form': form})
 
-def task_management(request):
-    return render(request, 'task_management.html')
+# def task_management(request):
+#     return render(request, 'task_management.html')
 
 def report(request):
     return render(request, 'report.html')
