@@ -1,0 +1,13 @@
+{% extends 'user_management.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1>Delete Department</h1>
+    <p>Are you sure you want to delete the department '{{ department.name }}'?</p>
+    <form method="post" action="{% url 'delete_department' department.id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Delete</button>
+      <a href="{% url 'department' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+{% endblock %}

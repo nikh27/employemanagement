@@ -101,6 +101,46 @@ def delete_user(request, user_id):
 
     return render(request, 'delete_user.html', {'user': user})
 
+@login_required
+def edit_department(request, department_id):
+    department = get_object_or_404(Department, id=department_id)
+    
+    if request.method == 'POST':
+        form = DepartmentForm(request.POST, instance=department)
+        if form.is_valid():
+            form.save()
+            return redirect('department')  # Redirect to the department page
+    else:
+        form = DepartmentForm(instance=department)
+
+    return render(request, 'edit_department.html', {'department': department, 'form': form})
+
+def view_department(request, department_id):
+    department = get_object_or_404(Department, id=department_id)
+    return render(request, 'view_department.html', {'department': department})
+
+@login_required
+def delete_department(request, department_id):
+    department = get_object_or_404(Department, id=department_id)
+
+    if request.method == 'POST':
+        # Delete department
+        department.delete()
+        return redirect('department')  # Redirect to a success page or wherever you want
+
+    return render(request, 'delete_department.html', {'department': department})
+
+def add_department(request):
+    if request.method == 'POST':
+        form = DepartmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('department')  # Redirect to the department list or any other page
+    else:
+        form = DepartmentForm()
+
+    return render(request, 'add_department.html', {'form': form})
+
 def task_management(request):
     return render(request, 'task_management.html')
 

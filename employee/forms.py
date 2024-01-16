@@ -1,6 +1,6 @@
 # forms.py
 from django import forms
-from .models import EmployeeDetail
+from .models import EmployeeDetail,Department
 from django.contrib.auth.models import User
 
 class UserForm(forms.ModelForm):
@@ -18,3 +18,8 @@ class EmployeeDetailForm(forms.ModelForm):
     widgets = {
         'joiningdate': forms.DateInput(attrs={'type': 'date'}),
     }
+    
+class DepartmentForm(forms.ModelForm):
+    class Meta:
+        model = Department
+        fields = ['name', 'description', 'status']

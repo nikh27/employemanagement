@@ -2,14 +2,13 @@
 
 {% block content %}
   <h1>Department List</h1>
+  <a href="{% url 'add_department' %}" class="btn btn-success mb-3">Add Department</a>
   <table class="table" id='example'>
     <thead>
       <tr>
         <th scope="col">Name</th>
         <th scope="col">Description</th>
-        <th scope="col">Status</th>
-        <th scope="col">Date Added</th>
-        <th scope="col">Date Updated</th>
+        <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -17,10 +16,35 @@
         <tr>
           <td>{{ department.name }}</td>
           <td>{{ department.description }}</td>
-          <td>{{ department.status }}</td>
-          <td>{{ department.date_added }}</td>
-          <td>{{ department.date_updated }}</td>
+          <td>
+            <a href="{% url 'edit_department' department.id %}" class="btn btn-primary btn-sm">Edit</a>
+            <a href="{% url 'view_department' department.id %}" class="btn btn-info btn-sm">View</a>
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteDepartment{{ department.id }}">
+              Delete
+            </button>
+          </td>
         </tr>
+
+        <!-- Modal for Delete Department -->
+        <div class="modal fade" id="deleteDepartment{{ department.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteDepartmentLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteDepartmentLabel">Delete Department</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you want to delete the department '{{ department.name }}'?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a href="{% url 'delete_department' department.id %}" class="btn btn-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
       {% endfor %}
     </tbody>
   </table>
