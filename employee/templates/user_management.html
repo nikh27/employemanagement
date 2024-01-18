@@ -65,7 +65,11 @@
             <div class="dashboard-header">
                 <h2>User Management Dashboard</h2>
                 <span>Hello, {{ user.first_name }}</span>
+                <div>
+                <a href="{% url 'logout' %}">Logout</a>
+                </div>
             </div>
+            
         </div>
     </div>
 

@@ -148,14 +148,27 @@ def report(request):
     return render(request, 'report.html')
 
 def user_master(request):
-    
-    users = EmployeeDetail.objects.all()
-    context = {'users': users}
-    return render(request, 'user_master.html', context)
+    is_staff_user = request.user.is_staff
+    if is_staff_user:
+        users = EmployeeDetail.objects.all()
+        context = {
+            'users': users,
+        }
+        return render(request, 'user_master.html', context)
+    else:
+        user = get_object_or_404(EmployeeDetail, user=request.user)
+        return render(request, 'view_user.html', {'user': user})
 
 def department(request):
-    departments = Department.objects.all()
-    return render(request, 'department.html', {'departments': departments})
+    is_staff_user = request.user.is_staff
+    if is_staff_user:
+        departments = Department.objects.all()
+        return render(request, 'department.html', {'departments': departments})
+    else:
+        employee_detail = get_object_or_404(EmployeeDetail, user=request.user)
+        department = employee_detail.empdept
+        return render(request, 'view_department.html', {'department': department})
+
 
 def designation(request):
     designations = Designation.objects.all()

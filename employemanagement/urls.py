@@ -27,7 +27,6 @@ urlpatterns = [
     path('admin_log', admin_log, name='admin_log'),
     path('logout/', Logout, name='logout'),
     path('emp_home/',include('employee.urls')),
-    path('tak/',include('task_mngt.urls')),
 ]
 
 
