@@ -18,8 +18,10 @@ urlpatterns = [
     path('view_department/<int:department_id>/', view_department, name='view_department'),
     path('delete_department/<int:department_id>/', delete_department, name='delete_department'),
     path('add_department/', add_department, name='add_department'),
-    
     path('department/', department, name='department'),
+    
     path('designation/', designation, name='designation'),
+
     path('user_menu_permission/', user_menu_permission, name='user_menu_permission'),
+    path('update_permission/<int:permission_id>/', update_permission, name='update_permission'),
 ]

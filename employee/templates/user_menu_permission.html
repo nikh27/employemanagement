@@ -8,6 +8,7 @@
         <th>User</th>
         <th>Menu Name</th>
         <th>Permission Level</th>
+        <th>Change Permission</th>
       </tr>
     </thead>
     <tbody>
@@ -15,9 +16,20 @@
         <tr>
           <td>{{ permission.user.username }}</td>
           <td>{{ permission.menu_name }}</td>
-          <td>{{ permission.permission_level }}</td>
+          <td>{{ permission.get_permission_display }}</td>
+          <td>
+            <form method="post" action="{% url 'update_permission' permission.id %}">
+              {% csrf_token %}
+              <select name="new_permission_level">
+                <option value="True">Is Staff</option>
+                <option value="False">Not Staff</option>
+              </select>
+              <button type="submit">Update</button>
+            </form>
+          </td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
 {% endblock %}
+

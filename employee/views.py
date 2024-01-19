@@ -3,6 +3,7 @@ from .forms import *
 from .models import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
 # Create your views here.
 
@@ -174,6 +175,17 @@ def designation(request):
     designations = Designation.objects.all()
     return render(request, 'designation.html', {'designations': designations})
 
+@user_passes_test(lambda u: u.is_staff)
 def user_menu_permission(request):
     permissions = UserMenuPermission.objects.all()
     return render(request, 'user_menu_permission.html', {'permissions': permissions})
+
+def update_permission(request, permission_id):
+    permission = get_object_or_404(UserMenuPermission, id=permission_id)
+    
+    if request.method == 'POST':
+        new_permission_level = request.POST.get('new_permission_level')
+        permission.permission_level = new_permission_level
+        permission.save()
+
+    return redirect('user_menu_permission')
