@@ -1,0 +1,29 @@
+{% extends 'user_management.html' %}
+
+{% block content %}
+  <h1>Add Designation</h1>
+
+  <form method="post" action="{% url 'add_designation' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="name" class="form-label">Name:</label>
+      <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description:</label>
+      <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="status" class="form-label">Status:</label>
+      <select class="form-control" id="status" name="status" required>
+        <option value="1">Active</option>
+        <option value="0">Inactive</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Designation</button>
+  </form>
+
+{% endblock %}

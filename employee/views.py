@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
+from django.http import HttpResponseBadRequest
 # Create your views here.
 
 def index(request):
@@ -67,10 +68,11 @@ def emp_home(request):
         return redirect('emp_login')
     return render(request,'emp_home.html')
 
+@login_required
 def user_management(request):
     return render(request, 'user_management.html')
 
-
+@login_required
 def edit_user(request, user_id):
     user = get_object_or_404(EmployeeDetail, id=user_id)
     
@@ -87,6 +89,7 @@ def edit_user(request, user_id):
 
     return render(request, 'edit_user.html', {'user': user, 'form': form, 'user_form': user_form})
 
+@login_required
 def view_user(request, user_id):
     user = get_object_or_404(EmployeeDetail, id=user_id)
     return render(request, 'view_user.html', {'user': user})
@@ -110,12 +113,13 @@ def edit_department(request, department_id):
         form = DepartmentForm(request.POST, instance=department)
         if form.is_valid():
             form.save()
-            return redirect('department')  # Redirect to the department page
+            return redirect('department') 
     else:
         form = DepartmentForm(instance=department)
 
     return render(request, 'edit_department.html', {'department': department, 'form': form})
 
+@login_required
 def view_department(request, department_id):
     department = get_object_or_404(Department, id=department_id)
     return render(request, 'view_department.html', {'department': department})
@@ -131,6 +135,7 @@ def delete_department(request, department_id):
 
     return render(request, 'delete_department.html', {'department': department})
 
+@login_required
 def add_department(request):
     if request.method == 'POST':
         form = DepartmentForm(request.POST)
@@ -142,12 +147,11 @@ def add_department(request):
 
     return render(request, 'add_department.html', {'form': form})
 
-# def task_management(request):
-#     return render(request, 'task_management.html')
-
+@login_required
 def report(request):
     return render(request, 'report.html')
 
+@login_required
 def user_master(request):
     is_staff_user = request.user.is_staff
     if is_staff_user:
@@ -160,6 +164,7 @@ def user_master(request):
         user = get_object_or_404(EmployeeDetail, user=request.user)
         return render(request, 'view_user.html', {'user': user})
 
+@login_required
 def department(request):
     is_staff_user = request.user.is_staff
     if is_staff_user:
@@ -170,22 +175,70 @@ def department(request):
         department = employee_detail.empdept
         return render(request, 'view_department.html', {'department': department})
 
+@login_required
+def designations(request):
+    is_staff_user = request.user.is_staff
+    if is_staff_user:
+        designations = Designation.objects.all()
+        return render(request, 'designation.html', {'designations': designations})
+    else:
+        employee_detail = get_object_or_404(EmployeeDetail, user=request.user)
+        designation = employee_detail.designation
+        return render(request, 'view_designation.html', {'designation': designation})
 
-def designation(request):
-    designations = Designation.objects.all()
-    return render(request, 'designation.html', {'designations': designations})
+def view_designation(request, designation_id):
+    designation = get_object_or_404(Designation, id=designation_id)
+    return render(request, 'view_designation.html', {'designation': designation})
 
+def add_designation(request):
+    if request.method == 'POST':
+        form = DesignationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('designations')
+    else:
+        form = DesignationForm()
+
+    return render(request, 'add_designation.html', {'form': form})
+
+def edit_designation(request, designation_id):
+    designation = get_object_or_404(Designation, id=designation_id)
+
+    if request.method == 'POST':
+        form = DesignationForm(request.POST, instance=designation)
+        if form.is_valid():
+            form.save()
+            return redirect('designations')
+    else:
+        form = DesignationForm(instance=designation)
+
+    return render(request, 'edit_designation.html', {'form': form, 'designation': designation})
+
+def delete_designation(request, designation_id):
+    designation = get_object_or_404(Designation, id=designation_id)
+
+    if request.method == 'POST':
+        designation.delete()
+        return redirect('designations')
+
+    return render(request, 'delete_designation.html', {'designation': designation})
+
+@login_required
 @user_passes_test(lambda u: u.is_staff)
 def user_menu_permission(request):
     permissions = UserMenuPermission.objects.all()
     return render(request, 'user_menu_permission.html', {'permissions': permissions})
 
+@login_required
 def update_permission(request, permission_id):
     permission = get_object_or_404(UserMenuPermission, id=permission_id)
     
     if request.method == 'POST':
         new_permission_level = request.POST.get('new_permission_level')
-        permission.permission_level = new_permission_level
-        permission.save()
+        if new_permission_level != '':
+            permission.permission_level = new_permission_level
+            permission.save()
+        else:
+            return HttpResponseBadRequest("<h1>Please select a any permission level</h1>")
 
     return redirect('user_menu_permission')

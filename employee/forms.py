@@ -1,6 +1,6 @@
 # forms.py
 from django import forms
-from .models import EmployeeDetail,Department
+from .models import *
 from django.contrib.auth.models import User
 
 class UserForm(forms.ModelForm):
@@ -12,9 +12,6 @@ class EmployeeDetailForm(forms.ModelForm):
     class Meta:
         model = EmployeeDetail
         fields = ['empcode', 'empdept', 'designation', 'contact', 'gender']
-
-    # If you want to customize form fields or add validation, you can do so here
-    # For example, you can add a DateInput widget for the joiningdate field:
     widgets = {
         'joiningdate': forms.DateInput(attrs={'type': 'date'}),
     }
@@ -22,4 +19,9 @@ class EmployeeDetailForm(forms.ModelForm):
 class DepartmentForm(forms.ModelForm):
     class Meta:
         model = Department
+        fields = ['name', 'description', 'status']
+
+class DesignationForm(forms.ModelForm):
+    class Meta:
+        model = Designation
         fields = ['name', 'description', 'status']

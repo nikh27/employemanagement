@@ -14,13 +14,19 @@ urlpatterns = [
     path('delete_user/<int:user_id>/', delete_user, name='delete_user'),
 
     # Department URLs
+    path('department/', department, name='department'),\
+    path('add_department/', add_department, name='add_department'),
     path('edit_department/<int:department_id>/', edit_department, name='edit_department'),
     path('view_department/<int:department_id>/', view_department, name='view_department'),
     path('delete_department/<int:department_id>/', delete_department, name='delete_department'),
-    path('add_department/', add_department, name='add_department'),
-    path('department/', department, name='department'),
+
+
     
-    path('designation/', designation, name='designation'),
+    path('designations/', designations, name='designations'),
+    path('add_designations/', add_designation, name='add_designation'),
+    path('edit_designations/<int:designation_id>/', view_designation, name='view_designation'),
+    path('view_designations/<int:designation_id>/', edit_designation, name='edit_designation'),
+    path('delete_designations/<int:designation_id>/', delete_designation, name='delete_designation'),
 
     path('user_menu_permission/', user_menu_permission, name='user_menu_permission'),
     path('update_permission/<int:permission_id>/', update_permission, name='update_permission'),

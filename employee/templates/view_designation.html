@@ -1,0 +1,22 @@
+{% extends 'user_management.html' %}
+
+{% block content %}
+  <h1>Designation Details</h1>
+
+  <dl class="row">
+    <dt class="col-sm-3">Name:</dt>
+    <dd class="col-sm-9">{{ designation.name }}</dd>
+
+    <dt class="col-sm-3">Description:</dt>
+    <dd class="col-sm-9">{{ designation.description }}</dd>
+
+    <dt class="col-sm-3">Status:</dt>
+    <dd class="col-sm-9">{{ designation.get_status_display }}</dd>
+
+    <dt class="col-sm-3">Date Added:</dt>
+    <dd class="col-sm-9">{{ designation.date_added }}</dd>
+
+    <dt class="col-sm-3">Date Updated:</dt>
+    <dd class="col-sm-9">{{ designation.date_updated }}</dd>
+  </dl>
+{% endblock %}

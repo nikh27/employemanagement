@@ -2,14 +2,13 @@
 
 {% block content %}
   <h1>Designation List</h1>
+  <a href="{% url 'add_designation' %}" class="btn btn-success mb-3">Add Designation</a>
   <table class="table" id='example'>
     <thead>
       <tr>
         <th scope="col">Name</th>
         <th scope="col">Description</th>
-        <th scope="col">Status</th>
-        <th scope="col">Date Added</th>
-        <th scope="col">Date Updated</th>
+        <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -17,10 +16,35 @@
         <tr>
           <td>{{ designation.name }}</td>
           <td>{{ designation.description }}</td>
-          <td>{{ designation.status }}</td>
-          <td>{{ designation.date_added }}</td>
-          <td>{{ designation.date_updated }}</td>
+          <td>
+            <a href="{% url 'edit_designation' designation.id %}" class="btn btn-primary btn-sm">Edit</a>
+            <a href="{% url 'view_designation' designation.id %}" class="btn btn-info btn-sm">View</a>
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteDesignation{{ designation.id }}">
+              Delete
+            </button>
+          </td>
         </tr>
+
+        <!-- Modal for Delete Designation -->
+        <div class="modal fade" id="deleteDesignation{{ designation.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteDesignationLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteDesignationLabel">Delete Designation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you want to delete the designation '{{ designation.name }}'?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a href="{% url 'delete_designation' designation.id %}" class="btn btn-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
       {% endfor %}
     </tbody>
   </table>

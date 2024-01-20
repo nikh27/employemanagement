@@ -21,6 +21,7 @@
             <form method="post" action="{% url 'update_permission' permission.id %}">
               {% csrf_token %}
               <select name="new_permission_level">
+                <option value="">-------</option>
                 <option value="True">Is Staff</option>
                 <option value="False">Not Staff</option>
               </select>

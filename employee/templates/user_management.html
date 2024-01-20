@@ -79,7 +79,7 @@
                 <h2>Master</h2>
                 <a href="{% url 'user_master' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'user_master' %}active{% endif %}">User Master</a>
                 <a href="{% url 'department' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'department' %}active{% endif %}">Department</a>
-                <a href="{% url 'designation' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'designation' %}active{% endif %}">Designation</a>
+                <a href="{% url 'designations' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'designation' %}active{% endif %}">Designation</a>
                 {% if user.is_staff %}
                 <a href="{% url 'user_menu_permission' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'user_menu_permission' %}active{% endif %}">User Menu Permission</a>
                 {% endif %}
