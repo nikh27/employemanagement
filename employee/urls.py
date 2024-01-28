@@ -4,7 +4,6 @@ from employee.views import *
 
 urlpatterns = [
     path('', emp_home, name='emp_home'),
-    path('user_management/', user_management, name='user_management'),
     path('task_management/', include('task_mngt.urls')),
     path('report/', report, name='report'),
     path('user_master/', user_master, name='user_master'),
@@ -14,7 +13,7 @@ urlpatterns = [
     path('delete_user/<int:user_id>/', delete_user, name='delete_user'),
 
     # Department URLs
-    path('department/', department, name='department'),\
+    path('department/', department, name='department'),
     path('add_department/', add_department, name='add_department'),
     path('edit_department/<int:department_id>/', edit_department, name='edit_department'),
     path('view_department/<int:department_id>/', view_department, name='view_department'),

@@ -69,10 +69,6 @@ def emp_home(request):
     return render(request,'emp_home.html')
 
 @login_required
-def user_management(request):
-    return render(request, 'user_management.html')
-
-@login_required
 def edit_user(request, user_id):
     user = get_object_or_404(EmployeeDetail, id=user_id)
     

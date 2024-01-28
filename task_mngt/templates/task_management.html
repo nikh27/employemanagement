@@ -1,47 +1,95 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyopJlFdL5giRS6OwUzo8zcXl3JGKS5J8" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-  <style>
-    body {
-      background-color: #f8f9fa;
-    }
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    .dashboard-header {
-      background-color: #343a40;
-      color: #ffffff;
-      padding: 15px;
-      text-align: right;
-      display: flex;
-      justify-content: space-between;
-      align-items: center; /* Vertical centering */
-    }
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin: 0; /* Remove body margin */
+        }
 
-    .dashboard-header h2 {
-      margin: 0; /* Remove default margin for h2 */
-    }
-  </style>
+        .dashboard-header {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 15px;
+            text-align: right;
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Vertical centering */
+            width: 100%;
+            margin: 0; /* Remove margin */
+        }
+
+        .master-section {
+            margin: 10px 15px;
+            border-bottom: 1px solid #ddd;/* Add line between Master and Content */
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable( {
+                dom: 'Bfrtip',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
+                ]
+            } );
+        } );
+      </script>
 </head>
 <body>
 
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="dashboard-header">
-        <h2>Task Management Dashboard</h2>
-        <span>Hello, {{ user.first_name }}</span>
-      </div>
+<div class="">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dashboard-header">
+                <h2>Task Management Dashboard</h2>
+                <span>Hello, {{ user.first_name }}</span>
+                <div>
+                <a href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+            
+        </div>
     </div>
-  </div>
+
+    <div class="row">
+        <div class="col-sm-2 p-0">
+            <div class="master-section">
+                <a href="{% url 'milestone' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'milestone' %}active{% endif %}">Define Mildstone</a>
+                <a href="{% url 'create_task' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'create_task' %}active{% endif %}">Create Task</a>
+                <a href="{% url 'assign_task' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'assign_task' %}active{% endif %}">Assign Task</a>
+                <a href="{% url 'my_task' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'my_task' %}active{% endif %}">My Task</a>
+                <a href="{% url 'emp_home' %}" class="list-group-item list-group-item-action">Back to Home</a>
+
+            </div>
+        </div>
+        <div class="col-sm-10 main-content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
 </div>
+
 </body>
 </html>
-<h1>Task Management</h1>
-<ul>
-    <li>Define Milestone</li>
-    <li>Create Task</li>
-    <li>Assign Task</li>
-    <li>My Task</li>
-</ul>

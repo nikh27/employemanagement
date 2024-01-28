@@ -1,0 +1,51 @@
+{% extends 'task_management.html' %}
+
+{% block content %}
+<h1>Assign Task</h1>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>Assigned To</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for assignment in assign_task %}
+        <tr>
+          <td>{{ assignment.task.name }}</td>
+          <td>{{ assignment.assigned_to.username }}</td>
+          <td>
+            <a href="#" class="btn btn-primary btn-sm">Edit</a>
+            <a href="#" class="btn btn-info btn-sm">View</a>
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteAssignment{{ assignment.id }}">
+              Delete
+            </button>
+          </td>
+        </tr>
+
+        <!-- Modal for Delete Assignment -->
+        <div class="modal fade" id="deleteAssignment{{ assignment.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteAssignmentLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteAssignmentLabel">Delete Assignment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you want to delete the assignment for '{{ assignment.task.name }}'?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a href="#" class="btn btn-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
