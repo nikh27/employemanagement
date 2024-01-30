@@ -37,15 +37,44 @@ def edit_milestone(request, milestone_id):
         form = MilestoneForm(request.POST, instance=milestone)
         if form.is_valid():
             form.save()
-            return redirect('milestone')  # Redirect to the appropriate URL after editing
+            return redirect('milestone')
     else:
         form = MilestoneForm(instance=milestone)
-
+    form = MilestoneForm()
     return render(request, 'edit_milestone.html', {'form': form, 'milestone': milestone})
 
 def create_task(request):
     workitems = WorkItem.objects.all()
-    return render(request,'create_task.html', {"workitems": workitems})
+    form = WorkItemForm()
+
+    if request.method == 'POST':
+        form = WorkItemForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Task added successfully!')
+            return redirect('create_task')
+        else:
+            messages.error(request, 'Failed to add task. Check form errors.')
+    return render(request,'create_task.html', {"workitems": workitems,"form":form})
+
+def delete_task(request, task_id):
+    work_item = get_object_or_404(WorkItem, id=task_id)
+    work_item.delete()
+    return redirect('create_task')
+
+def edit_task(request, task_id):
+    task = get_object_or_404(WorkItem, id=task_id)
+
+    if request.method == 'POST':
+        form = WorkItemForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect('create_task') 
+    else:
+        form = WorkItemForm(instance=task)
+
+    return render(request, 'edit_task.html', {'form': form, 'task': task})
+
 
 def assign_task(request):
     assign_task = TaskAssignment.objects.all()

@@ -1,75 +1,134 @@
 {% extends 'task_management.html' %}
 
-
 {% block content %}
   <h1>Task List</h1>
 
-  <table class="table" id="#example">
+  <table class="table" id="example">
     <thead>
       <tr>
         <th>Name</th>
-        <th>Description</th>
-        <th>Mildstone</th>
+        <th>Milestone</th>
         <th>Priority</th>
         <th>Target Date</th>
-        
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       {% for task in workitems %}
         <tr>
           <td>{{ task.name }}</td>
-          <td>{{ task.description }}</td>
           <td>{{ task.milestone.name }}</td>
           <td>{{ task.get_priority_display }}</td>
           <td>{{ task.target_date }}</td>
+          <td>
+            <a href="{% url 'edit_task' task.id %}" class="btn btn-info text-white text-decoration-none">Edit</a>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#viewDeleteModal{{ task.id }}">View</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmationModal{{ task.id }}">Delete</button>
+          </td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
-{% endblock %}
 
-{% comment %} {% extends 'task_management.html' %}
 
-{% block content %}
-  <h1>Create Task</h1>
-
-  <form method="post" action="{% url 'create_task' %}">
-    {% csrf_token %}
-    <div class="mb-3">
-        <label for="milestone" class="form-label">Milestone:</label>
-        <select class="form-control" id="milestone" name="milestone" required>
-          {% for milestone in milestones %}
-            <option value="{{ milestone.id }}">{{ milestone.name }}</option>
-          {% endfor %}
-        </select>
+{% for task in workitems %}
+  <div class="modal fade" id="editModal{{ task.id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ task.id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel{{ task.id }}">Edit Task</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="{% url 'edit_task' task.id %}">
+            {% csrf_token %}
+            
+            <div class="form-group">
+              <label for="{{ form.name.id_for_label }}">Name</label>
+              <input type="text" class="form-control" id="{{ form.name.id_for_label }}" name="{{ form.name.name }}" value="{{ task.name }}">
+            </div>
+            <div class="form-group">
+              <label for="{{ form.description.id_for_label }}">Description</label>
+              <textarea class="form-control" id="{{ form.description.id_for_label }}" name="{{ form.description.name }}">{{ task.description }}</textarea>
+            </div>
+            <div class="form-group">
+              <label for="{{ form.priority.id_for_label }}">Priority</label>
+              <select class="form-control" id="{{ form.priority.id_for_label }}" name="{{ form.priority.name }}">
+                <option value="p1" {% if task.priority == 'p1' %}selected{% endif %}>P1</option>
+                <option value="p2" {% if task.priority == 'p2' %}selected{% endif %}>P2</option>
+                <option value="p3" {% if task.priority == 'p3' %}selected{% endif %}>P3</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="{{ form.status.id_for_label }}">Status</label>
+              <input type="text" class="form-control" id="{{ form.status.id_for_label }}" name="{{ form.status.name }}" value="{{ task.status }}">
+            </div>
+            <div class="form-group">
+              <label for="{{ form.milestone.target_date.id_for_label }}">Milestone Target Date</label>
+              <input type="date" class="form-control" id="{{ form.milestone.target_date.id_for_label }}" name="{{ form.milestone.target_date.name }}" value="{{ task.milestone.target_date }}">
+            </div>
+            <!-- Add other form fields as needed -->
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </form>
+        </div>
       </div>
-    <div class="mb-3">
-      <label for="name" class="form-label">Task Name:</label>
-      <input type="text" class="form-control" id="name" name="name" required>
     </div>
+  </div>
+{% endfor %}
 
-    <div class="mb-3">
-      <label for="description" class="form-label">Task Description:</label>
-      <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+<!-- ... existing code ... -->
+
+
+<!-- ... existing code ... -->
+
+
+  <!-- View/Delete Modal -->
+  {% for task in workitems %}
+    <div class="modal fade" id="viewDeleteModal{{ task.id }}" tabindex="-1" role="dialog" aria-labelledby="viewDeleteModalLabel{{ task.id }}" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="viewDeleteModalLabel{{ task.id }}">View/Delete Task</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p><strong>Name:</strong> {{ task.name }}</p>
+            <p><strong>Description:</strong> {{ task.description }}</p>
+            <p><strong>Milestone:</strong> {{ task.milestone.name }}</p>
+            <p><strong>Priority:</strong> {{ task.get_priority_display }}</p>
+            <p><strong>Target Date:</strong> {{ task.target_date }}</p>
+          </div>
+        </div>
+      </div>
     </div>
+  {% endfor %}
 
-    <div class="mb-3">
-      <label for="priority" class="form-label">Priority:</label>
-      <select class="form-control" id="priority" name="priority" required>
-        <option value="p1">P1</option>
-        <option value="p2">P2</option>
-        <option value="p3">P3</option>
-      </select>
+  <!-- Add Task Button -->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTaskModal">
+    Add Task
+  </button>
+
+  <!-- Add Task Modal -->
+  <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addTaskModalLabel">Add Task</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="{% url 'create_task' %}" id="TaskForm">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Add Task</button>
+          </form>
+        </div>
+      </div>
     </div>
-
-    <div class="mb-3">
-      <label for="target_date" class="form-label">Target Date:</label>
-      <input type="date" class="form-control" id="target_date" name="target_date" required>
-    </div>
-
-
-
-    <button type="submit" class="btn btn-primary">Create Task</button>
-  </form>
-{% endblock %} {% endcomment %}
+  </div>
+{% endblock %}
