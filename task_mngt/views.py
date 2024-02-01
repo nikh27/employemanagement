@@ -43,6 +43,11 @@ def edit_milestone(request, milestone_id):
     form = MilestoneForm()
     return render(request, 'edit_milestone.html', {'form': form, 'milestone': milestone})
 
+def delete_task(request, task_id):
+    work_item = get_object_or_404(WorkItem, id=task_id)
+    work_item.delete()
+    return redirect('create_task')
+
 def create_task(request):
     workitems = WorkItem.objects.all()
     form = WorkItemForm()
@@ -57,11 +62,6 @@ def create_task(request):
             messages.error(request, 'Failed to add task. Check form errors.')
     return render(request,'create_task.html', {"workitems": workitems,"form":form})
 
-def delete_task(request, task_id):
-    work_item = get_object_or_404(WorkItem, id=task_id)
-    work_item.delete()
-    return redirect('create_task')
-
 def edit_task(request, task_id):
     task = get_object_or_404(WorkItem, id=task_id)
 
@@ -75,10 +75,38 @@ def edit_task(request, task_id):
 
     return render(request, 'edit_task.html', {'form': form, 'task': task})
 
+def update_assign(request, assignment_id):
+    assign = get_object_or_404(TaskAssignment, id=assignment_id)
+
+    if request.method == 'POST':
+        form = TaskAssignmentForm(request.POST, instance=assign)
+        if form.is_valid():
+            form.save()
+            return redirect('assign_task') 
+    else:
+        form = TaskAssignmentForm(instance=assign)
+
+    return render(request, 'update_assign.html', {'form': form, 'assign': assign})
 
 def assign_task(request):
     assign_task = TaskAssignment.objects.all()
-    return render(request,'assign_task.html',{'assign_task':assign_task})
+    form = TaskAssignmentForm()
+
+    if request.method == 'POST':
+        form = TaskAssignmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'assign successfully!')
+            return redirect('assign_task')
+        else:
+            messages.error(request, 'Failed to assign task. Check form errors.')
+
+    return render(request,'assign_task.html',{'assign_task':assign_task, "form":form})
+
+def delete_assignment(request, assignment_id):
+    task = get_object_or_404(TaskAssignment, id=assignment_id)
+    task.delete()
+    return redirect('assign_task')
 
 def my_task(request):
     return render(request,'my_task.html')

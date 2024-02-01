@@ -14,5 +14,8 @@ urlpatterns = [
     path('delete_task/<int:task_id>/', delete_task, name='delete_task'),
 
     path('assign_task/', assign_task, name='assign_task'),
+    path('delete_assignment/<int:assignment_id>/', delete_assignment, name='delete_assignment'),
+    path('update_assign/<int:assignment_id>/', update_assign, name='update_assign'),
+    
     path('my_task/',my_task, name='my_task'),
 ]

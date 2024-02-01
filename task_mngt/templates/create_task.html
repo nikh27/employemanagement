@@ -30,58 +30,34 @@
     </tbody>
   </table>
 
-
-{% for task in workitems %}
-  <div class="modal fade" id="editModal{{ task.id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ task.id }}" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editModalLabel{{ task.id }}">Edit Task</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form method="post" action="{% url 'edit_task' task.id %}">
-            {% csrf_token %}
-            
-            <div class="form-group">
-              <label for="{{ form.name.id_for_label }}">Name</label>
-              <input type="text" class="form-control" id="{{ form.name.id_for_label }}" name="{{ form.name.name }}" value="{{ task.name }}">
-            </div>
-            <div class="form-group">
-              <label for="{{ form.description.id_for_label }}">Description</label>
-              <textarea class="form-control" id="{{ form.description.id_for_label }}" name="{{ form.description.name }}">{{ task.description }}</textarea>
-            </div>
-            <div class="form-group">
-              <label for="{{ form.priority.id_for_label }}">Priority</label>
-              <select class="form-control" id="{{ form.priority.id_for_label }}" name="{{ form.priority.name }}">
-                <option value="p1" {% if task.priority == 'p1' %}selected{% endif %}>P1</option>
-                <option value="p2" {% if task.priority == 'p2' %}selected{% endif %}>P2</option>
-                <option value="p3" {% if task.priority == 'p3' %}selected{% endif %}>P3</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="{{ form.status.id_for_label }}">Status</label>
-              <input type="text" class="form-control" id="{{ form.status.id_for_label }}" name="{{ form.status.name }}" value="{{ task.status }}">
-            </div>
-            <div class="form-group">
-              <label for="{{ form.milestone.target_date.id_for_label }}">Milestone Target Date</label>
-              <input type="date" class="form-control" id="{{ form.milestone.target_date.id_for_label }}" name="{{ form.milestone.target_date.name }}" value="{{ task.milestone.target_date }}">
-            </div>
-            <!-- Add other form fields as needed -->
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-          </form>
+  <!-- Delete Confirmation Modal -->
+  {% for task in workitems %}
+    <div class="modal fade" id="deleteConfirmationModal{{ task.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteConfirmationLabel">Delete Task Confirmation</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete the Task '{{ task.name }}'?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <form method="post" action="{% url 'delete_task' task.id %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-{% endfor %}
-
-<!-- ... existing code ... -->
+  {% endfor %}
 
 
-<!-- ... existing code ... -->
+
 
 
   <!-- View/Delete Modal -->
